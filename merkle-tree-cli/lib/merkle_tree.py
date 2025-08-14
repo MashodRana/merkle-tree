@@ -1,4 +1,4 @@
-from utils import hash_data, hash_file_content
+from lib.utils import hash_data, hash_file_content
 
 
 def build_merkle_tree(items: list, is_file_paths: bool = False):
@@ -13,7 +13,7 @@ def build_merkle_tree(items: list, is_file_paths: bool = False):
         if is_file_paths:
             node_data = {
                 "hash": hash_file_content(item),
-                "file_path": item
+                "file_path": str(item)
             }
         else:
             node_data = {
@@ -41,6 +41,7 @@ def build_merkle_tree(items: list, is_file_paths: bool = False):
             })
         tree_levels.append(next_level)
         current_level = next_level
+        num_nodes = len(current_level)
     return {
         "root": current_level[0],
         "tree_levels": tree_levels,
